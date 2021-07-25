@@ -7,6 +7,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { set } from 'react-native-reanimated'
 import Display from './screens/guest/Display'
 import Subscribe_Cat from './screens/universal/Subscribe_Cat'
+import AppContainer from './screens/user/AppContainer'
+import Houser from './screens/user/Houser'
 
 export default function MainNavigator() {
     // AsyncStorage.clear(); 
@@ -95,19 +97,20 @@ export default function MainNavigator() {
                         {(isSignedIn == 'false') ? 
                             <>
                             {/* guest */}
-                            <StackNav.Screen name="Display" component={Display}/>
+                              <StackNav.Screen name="Display" component={Display}/>
+                              <StackNav.Screen name="Subscribe_Cat" component={Subscribe_Cat}/>
                             </>
                             :
                             <>
                             {/* user */}
-                              {/* <StackNav.Screen name="AppContainer" component={AppContainer}/> */}
-                              {/* <StackNav.Screen name="Houser" component={Houser}/> */}
+                              <StackNav.Screen name="AppContainer" component={AppContainer}/>
+                              <StackNav.Screen name="Houser" component={Houser}/>
                               
                             </>
                         }
                         
                         {/* universal screen */}
-                        <StackNav.Screen name="Subscribe_Cat" component={Subscribe_Cat}/>
+                        {/* <StackNav.Screen name="Subscribe_Cat" component={Subscribe_Cat}/> would make another duplicate file */}
                         </>
                         )
                     }

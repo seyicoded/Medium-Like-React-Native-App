@@ -68,7 +68,8 @@ export const Styles_Display_Guest = StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: getStatusBarHeight(true)
     },
 
     logo: {

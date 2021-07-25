@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, useContext} from 'react';
 import { View, Text,Image, StyleSheet,SafeAreaView,TouchableOpacity, Dimensions} from 'react-native'
 import * as CONFIG from '../../CONFIG'
 import axios from 'axios';
@@ -6,10 +6,12 @@ import * as Google from 'expo-google-app-auth';
 import RBSheet from "react-native-raw-bottom-sheet";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import {Input, Button} from 'react-native-elements'
+import {CommonActions} from '@react-navigation/native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function Display({navigation, route}) {
     const [signupmode, setsignupmode] = useState(true);
-
+    const context = React.useContext(CONFIG.AppContext);
     const [email, setemail] = useState('');
     const [full_name, setfull_name] = useState('');
 
@@ -104,9 +106,20 @@ export default function Display({navigation, route}) {
         }
     }
 
-    const process_data = (res)=>{
+    const process_data =async (res)=>{
         if(res.status){
             // save as fully completed, to go AppContainer
+            await AsyncStorage.setItem('user_id',res.data.u_id+'')
+            await AsyncStorage.setItem('user_email',res.data.email+'')
+            await AsyncStorage.setItem('user_name',res.data.name+'')
+            await AsyncStorage.setItem('image',res.data.photo_url+'')
+
+            context[1].setisSignedIn(true)
+            context[1].setid(res.data.u_id+'')
+            setTimeout(()=>{
+                navigation.navigate('AppContainer')
+            },2000)
+
         }else{
             if(res.type == "not-completed"){
                 // togo subscription||location base page and send user_id
