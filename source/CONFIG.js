@@ -12,7 +12,7 @@ export const ALERT = ALERTSYSTEM;
 
 export const AppContext = React.createContext([]);
 
-export const BASE_URL = "http://172.20.10.3:8000/api/"
+export const BASE_URL = "http://172.20.10.3:8000/api/v1/"
 // export const BASE_URL = "http://blesify1.herokuapp.com/public/api/"
 export const API_KEY = "Blesify__API_KEY001";
 
@@ -80,7 +80,8 @@ export const Styles_Display_Guest = StyleSheet.create({
     title: {
         fontSize: 22,
         fontWeight: '600',
-        marginVertical: '3%'
+        marginVertical: '3%',
+        textAlign: 'center'
     },
     already_text: {
         fontSize: 14
@@ -93,6 +94,18 @@ export const Styles_Display_Guest = StyleSheet.create({
         textAlign: 'center',
         padding: 15,
         lineHeight: 20
+    }, 
+    btn: {
+        backgroundColor: 'green',
+        width: '94%',
+        textAlign: 'center',
+        color: 'white',
+        paddingVertical: 16,
+        elevation: 6,
+        borderRadius: 24,
+        overflow: 'hidden',
+        fontSize: 16
+
     }
 });
 

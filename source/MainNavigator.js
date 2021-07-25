@@ -6,6 +6,7 @@ import {createStackNavigator} from '@react-navigation/stack'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { set } from 'react-native-reanimated'
 import Display from './screens/guest/Display'
+import Subscribe_Cat from './screens/universal/Subscribe_Cat'
 
 export default function MainNavigator() {
     // AsyncStorage.clear(); 
@@ -106,6 +107,7 @@ export default function MainNavigator() {
                         }
                         
                         {/* universal screen */}
+                        <StackNav.Screen name="Subscribe_Cat" component={Subscribe_Cat}/>
                         </>
                         )
                     }
