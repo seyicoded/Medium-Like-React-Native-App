@@ -22,7 +22,7 @@ export const PUSHER_API_KEY = "bb511c06d0a6d05e2325"
 // export const Primary_color = '#F98445';
 export const Primary_color = 'black'; //blue--#1D05FB
 export const Primary_color_2 = 'white'; //blue--#1D05FB
-export const Primary_color_icon = 'rgba(183, 28, 28, 1)'; //blue--#1D05FB --#2D2294
+export const Primary_color_icon = 'black'; //blue--#1D05FB --#2D2294
 export const Houser_Icon_color = 'rgba(183, 28, 28, 0.7)'; //blue=rgba(45,34,148,0.7)
 export const HomeScreenTopFloat_Color = 'rgba(183, 28, 28, 0.5)'; //blue=rgba(45,34,148,0.5)
 export const Secondary_color = '#C4C4C4'; //#727376

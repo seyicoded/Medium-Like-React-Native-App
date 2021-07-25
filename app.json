@@ -21,6 +21,7 @@
       "bundleIdentifier": "com.blesify.readapp",
       "buildNumber": "1.0.1",
       "icon": "./assets/icon.png",
+      "googleServicesFile": "./GoogleService-Info.plist",
       "infoPlist": {
         "NSCameraUsageDescription": "Allow users to upload and modify their profile picture and other associated task",
         "NSLocationUsageDescription": "Allow for blesify message tracking, it's a key feature",
@@ -30,6 +31,11 @@
         "UIBackgroundModes": ["location", "fetch"],
         "NSPhotoLibraryAddUsageDescription": "This app would like to save an images version of your qr-code to your device."
         
+      },
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "com.googleusercontent.apps.353146767564-70b7pel2rf04o647r3pnmnkrb730bg1i"
+        }
       }
     },
     "android": {
