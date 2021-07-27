@@ -11,14 +11,15 @@ import Settings from './Bottom_Screen/Settings'
 
 const BottomNav = createBottomTabNavigator();
 
-export default function componentName({navigation, route}) {
+export default function componentName({navigation, route, all_articles, all_categories}) {
     const context = React.useContext(CONFIG.AppContext);
+    // console.log({all_articles: all_articles, all_categories: all_categories})
   return (
     <BottomNav.Navigator tabBarOptions={{labelStyle: {height: 0}}}>
         <BottomNav.Screen name="BNA_HOME" options={{
             title: '',
             tabBarIcon: ({color, size, focused})=><Icon name="home" size={size} color={focused ? 'green':'grey'}/>,
-            }} component={Home}/>
+            }} component={Home} initialParams={{all_articles: all_articles, all_categories: all_categories}}/>
 
         <BottomNav.Screen name="BNA_Search" options={{
             title: '',

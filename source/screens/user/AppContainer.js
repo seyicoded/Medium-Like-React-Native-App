@@ -41,6 +41,9 @@ export default function AppContainer({navigation, route}) {
     const [user_state, setuser_state] = useState(null) //blocked || unactivated || okay
     const [showError, setshowError] = useState(false)
     const [AlertMessage, setAlertMessage] = useState('Network Error')
+    const [all_categories, setall_categories] = useState([])
+    const [all_articles, setall_articles] = useState([])
+
     //to check data from database and update context state then also register push token
 
     const error = (msg)=>{
@@ -71,6 +74,10 @@ export default function AppContainer({navigation, route}) {
                 await AsyncStorage.setItem('user_name',res.data[0].name+'')
                 await AsyncStorage.setItem('image',res.data[0].photo_url+'')
 
+                // console.log(res)
+                setall_articles(res.articles)
+                setall_categories(res.categories)
+
                 //update context
                 const isSignedIn = context[0].id;
                 context[1].setid(isSignedIn)
@@ -100,7 +107,7 @@ export default function AppContainer({navigation, route}) {
             'api_key': CONFIG.API_KEY,
         };
 
-        axios.post(`${CONFIG.BASE_URL}reg-push-token`, fd).then(res => console.log(res))
+        axios.post(`${CONFIG.BASE_URL}reg-push-token`, fd).then(res => {})
         //
     }
 
@@ -110,7 +117,7 @@ export default function AppContainer({navigation, route}) {
             registerForPushNotificationsAsync().then(token => {
                 setExpoPushToken(token)
                 send_to_server(token)
-                console.log(token+': token_reached');
+                // console.log(token+': token_reached');
             });
         }catch(e){
             console.log(e)
@@ -178,7 +185,7 @@ export default function AppContainer({navigation, route}) {
 
     if((user_state == 'okay') && !(isLoading)){
         // navigation.navigate('Houser')
-        return <Houser navigation={navigation} route={route} />
+        return <Houser navigation={navigation} route={route} all_articles={all_articles} all_categories={all_categories} />
     }
 
     return (
