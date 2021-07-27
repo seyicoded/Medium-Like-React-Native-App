@@ -9,6 +9,7 @@ import Display from './screens/guest/Display'
 import Subscribe_Cat from './screens/universal/Subscribe_Cat'
 import AppContainer from './screens/user/AppContainer'
 import Houser from './screens/user/Houser'
+import News_Contents from './screens/user/News_Contents'
 
 export default function MainNavigator() {
     // AsyncStorage.clear(); 
@@ -105,6 +106,7 @@ export default function MainNavigator() {
                             {/* user */}
                               <StackNav.Screen name="AppContainer" component={AppContainer}/>
                               <StackNav.Screen name="Houser" component={Houser}/>
+                              <StackNav.Screen name="News_Contents" component={News_Contents}/>
                               
                             </>
                         }

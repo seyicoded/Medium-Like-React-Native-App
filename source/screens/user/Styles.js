@@ -27,4 +27,37 @@ export const Home_Screen = StyleSheet.create({
         color: 'grey',
         width: '100%'
     },
+
+    // home screen extension to content
+    content_title:{
+        fontWeight: 'bold',
+        fontSize: 24,
+        paddingHorizontal: 10,
+        textAlign: 'center',
+        marginBottom: 10
+    },
+    content_close_btn: {
+        fontSize: 24, position: 'absolute', top: getStatusBarHeight() + 10, right: 10,
+        padding: 5
+    },
+    content_desc: {
+        textAlign: 'justify',
+        marginHorizontal: 14,
+        fontSize: 10,
+        color: 'grey',
+        fontStyle: 'italic',
+        marginBottom: 10
+    },
+    bottom_btn: {
+        backgroundColor: 'black',
+        color: 'white',
+        paddingVertical: 20,
+        width: '92%',
+        margin: '1%',
+        textAlign: 'center',
+        fontSize: 16,
+        fontWeight: 'bold',
+        borderRadius: 8,
+        overflow: 'hidden'
+    }
 })

@@ -4,9 +4,7 @@ import * as CONFIG from '../../../../CONFIG'
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import {Input, Button, Image} from 'react-native-elements'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as Styles from '../../Styles'
-import WebView from 'react-native-webview';
 
 export default function HHome({navigation, route}) {
     // console.log(route)
@@ -92,7 +90,7 @@ export default function HHome({navigation, route}) {
 
             <View style={{flex: 1,}}>
                 <View style={{height: 72, marginTop: 15}}>
-                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} pagingEnabled={true} style={{height: 40,}}>
+                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} pagingEnabled={false} style={{height: 40,}}>
                         <TouchableOpacity onPress={()=>{getAll(); setchoosen_cat_color(0)}}>
                             <Text style={[styles.cat_item, (choosen_cat_color == 0) ? {backgroundColor: 'green', color: 'white'}:{backgroundColor: 'rgba(0, 0, 0, 0.1)', color: 'black'}]}>All</Text>
                         </TouchableOpacity>
@@ -113,15 +111,15 @@ export default function HHome({navigation, route}) {
                         </View>: 
                         <FlatList
                             data={all_articles}
-                            renderItem={({item, id}) => 
-                                <TouchableOpacity style={{marginBottom: 20}}>
+                            renderItem={({item, index}) => 
+                                <TouchableOpacity style={{marginBottom: 20}} onPress={()=>{navigation.navigate('News_Contents', {articles: all_articles, real_id: item.a_id, index: index})}}>
                                     <View style={{width: '100%', flexDirection: 'row', paddingHorizontal: '5%'}}>
                                         <View style={{flex: 1}}>
                                             <Text style={styles.a_title}>{item.a_title}</Text>
                                             <Text style={styles.a_desc}>{(item.a_desc).substring(0, 120)}....</Text>
                                         </View>
                                         <View style={{alignItems: 'center', justifyContent: 'center'}}>
-                                            <Image style={{width: 100, height: 100, elevation: 2, borderRadius: 2}} source={{uri: `${CONFIG.BASE_URL}../../images/article_image/${item.a_image}`}} PlaceholderContent={<ActivityIndicator/>}/>
+                                            <Image style={{width: 100, height: 100, borderRadius: 2}} source={{uri: `${CONFIG.BASE_URL}../../images/article_image/${item.a_image}`}} PlaceholderContent={<ActivityIndicator/>}/>
                                         </View>
                                     </View>
                                 </TouchableOpacity>}
