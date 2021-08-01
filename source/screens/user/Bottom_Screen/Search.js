@@ -49,7 +49,7 @@ export default function Search({navigation, route}) {
         setLoading(false)
     }
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {width: '100%', paddingTop: 5}]}>
         {
             (Loading) ? <CONFIG.ALERT.Loader /> : <></>
         }
@@ -61,7 +61,13 @@ export default function Search({navigation, route}) {
         }
 
         <View style={{flex: 1, paddingTop: 15, alignItems: 'center', width: '100%'}}>
-          <TextInput keyboardType="web-search" value={search_} onChangeText={txt=> {setsearch_(txt); search.current = txt}} style={{borderWidth: 1, borderColor: 'rgba(0, 0, 0, 0.3)', borderRadius: 8, padding: 10, width: '94%'}} placeholder="What are you looking for" autoFocus={true} onEndEditing={()=>{get_search()}} />
+          <TextInput keyboardType="web-search" value={search_} onChangeText={txt=> {setsearch_(txt); search.current = txt}} style={{borderWidth: 1, borderColor: 'rgba(0, 0, 0, 0.3)', borderRadius: 8, padding: 10, width: '94%'}} placeholder="What are you looking for" autoFocus={true} onEndEditing={()=>{
+              if((search.current).length == 0){
+                  error('enter a text to search');
+                  return false;
+              }
+                get_search()
+              }} />
           <Text />
           {
             (all_articles.length == 0) ?
@@ -79,7 +85,7 @@ export default function Search({navigation, route}) {
                             <Text style={styles.a_desc}>{(item.a_desc).substring(0, 120)}....</Text>
                         </View>
                         <View style={{alignItems: 'center', justifyContent: 'center'}}>
-                            <Image style={{width: 100, height: 100, borderRadius: 2}} source={{uri: `${CONFIG.BASE_URL}../../images/article_image/${item.a_image}`}} PlaceholderContent={<ActivityIndicator/>}/>
+                            <Image style={{width: 70, height: 70, borderRadius: 100}} source={{uri: `${CONFIG.BASE_URL}../../images/article_image/${item.a_image}`}} PlaceholderContent={<ActivityIndicator/>}/>
                         </View>
                     </View>
                 </TouchableOpacity>}

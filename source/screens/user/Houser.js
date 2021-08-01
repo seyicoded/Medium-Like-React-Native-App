@@ -11,9 +11,16 @@ import Settings from './Bottom_Screen/Settings'
 
 const BottomNav = createBottomTabNavigator();
 
-export default function componentName({navigation, route, all_articles, all_categories}) {
+export default function componentName({navigation, route, all_articles, all_categories, all_univ_cat, all_banners}) {
     const context = React.useContext(CONFIG.AppContext);
     // console.log({all_articles: all_articles, all_categories: all_categories})
+    // console.log(all_univ_cat)
+
+    return (
+        <Home navigation={navigation} route={ {params: {all_articles: all_articles, all_categories: all_categories, all_univ_cat: all_univ_cat, all_banners: all_banners}} } all_articles={all_articles} all_categories={all_categories}/>
+    );
+
+    // well he asked for it so we did it... fuck it
   return (
     <BottomNav.Navigator tabBarOptions={{labelStyle: {height: 0}}}>
         <BottomNav.Screen name="BNA_HOME" options={{

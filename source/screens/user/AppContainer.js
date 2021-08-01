@@ -43,6 +43,8 @@ export default function AppContainer({navigation, route}) {
     const [AlertMessage, setAlertMessage] = useState('Network Error')
     const [all_categories, setall_categories] = useState([])
     const [all_articles, setall_articles] = useState([])
+    const [all_univ_cat, setall_univ_cat] = useState([])
+    const [all_banners, setall_banners] = useState([])
 
     //to check data from database and update context state then also register push token
 
@@ -75,8 +77,12 @@ export default function AppContainer({navigation, route}) {
                 await AsyncStorage.setItem('image',res.data[0].photo_url+'')
 
                 // console.log(res)
-                setall_articles(res.articles)
-                setall_categories(res.categories)
+                setall_articles(res.articles);
+                setall_categories(res.categories);
+                setall_univ_cat(res.all_cat);
+                setall_banners(res.banners_data);
+
+                // console.log(res.all_cat)
 
                 //update context
                 const isSignedIn = context[0].id;
@@ -185,7 +191,7 @@ export default function AppContainer({navigation, route}) {
 
     if((user_state == 'okay') && !(isLoading)){
         // navigation.navigate('Houser')
-        return <Houser navigation={navigation} route={route} all_articles={all_articles} all_categories={all_categories} />
+        return <Houser navigation={navigation} route={route} all_articles={all_articles} all_categories={all_categories} all_univ_cat={all_univ_cat} all_banners={all_banners}/>
     }
 
     return (
