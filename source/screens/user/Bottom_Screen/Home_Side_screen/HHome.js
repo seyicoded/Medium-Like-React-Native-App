@@ -1,11 +1,14 @@
 import React, {useState, useEffect, useRef, useContext} from 'react';
-import { View, Text, ScrollView, StyleSheet,SafeAreaView,TouchableOpacity, Dimensions, FlatList, ActivityIndicator} from 'react-native'
+import { View, Text, ScrollView, StyleSheet,SafeAreaView,TouchableOpacity, Dimensions, FlatList, ActivityIndicator, Linking} from 'react-native'
 import * as CONFIG from '../../../../CONFIG'
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Icon1 from 'react-native-vector-icons/MaterialIcons'
+import IconEntypo from 'react-native-vector-icons/Entypo'
 import {Input, Button, Image} from 'react-native-elements'
 import RBSheet from "react-native-raw-bottom-sheet"
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import moment from "moment"
 import * as Styles from '../../Styles'
 import Search from '../Search'
 import Category from '../Category';
@@ -21,8 +24,12 @@ export default function HHome({navigation, route}) {
     const [all_articles, setall_articles] = useState(route.params.all_articles)
     const [all_univ_cat, setall_univ_cat] = useState(route.params.all_univ_cat)
     const [all_banners, setall_banners] = useState(route.params.all_banners)
-    // all_banners
     const [choosen_cat_color, setchoosen_cat_color] = useState(0)
+    const [bookmark, setbookmark] = useState(null)
+
+    const banner_counter = useRef(0);
+
+    // console.log(all_banners)
 
     // console.log(all_univ_cat)
 
@@ -40,6 +47,18 @@ export default function HHome({navigation, route}) {
         setAlertMessage(msg)
         setshowMessage(true)
     }
+
+    // get store value
+    const get_store_value = async ()=>{
+        const val = await AsyncStorage.getItem('bookmark_collections');
+        if(val != null){
+            setbookmark(JSON.parse(val))
+        }
+        console.log(val)
+    }
+    useEffect(()=>{
+        get_store_value()
+    }, [])
 
     // we would still pass it initial as props
     const getAll = async()=>{
@@ -180,17 +199,82 @@ export default function HHome({navigation, route}) {
                             onRefresh={()=>getAll()}
                             showsVerticalScrollIndicator={false}
                             renderItem={({item, index}) => 
+                                <>
                                 <TouchableOpacity style={{marginBottom: 20}} onPress={()=>{navigation.navigate('News_Contents', {articles: all_articles, real_id: item.a_id, index: index})}}>
                                     <View style={{width: '100%', flexDirection: 'row', paddingHorizontal: '5%'}}>
                                         <View style={{flex: 1}}>
                                             <Text style={styles.a_title}>{item.a_title}</Text>
                                             <Text style={styles.a_desc}>{(item.a_desc).substring(0, 120)}....</Text>
+                                            <Text />
+                                            <View style={{flexDirection: 'row'}}>
+                                                <Text style={{color: 'rgba(0, 0, 0, 0.6)'}}>
+                                                    {moment().diff(moment(item.a_date), 'days')} days ago 
+                                                </Text>
+                                                
+                                                <IconEntypo name="dot-single" size={20} color="rgba(0, 0, 0, 0.6)" />
+                                                
+                                                <Text style={{color: 'rgba(0, 0, 0, 0.6)'}}>{Math.ceil((50 * (item.a_content).length) / 100)} min read</Text>
+                                                
+                                                <View style={{flexDirection: 'row', flex: 1, justifyContent: 'flex-end'}}>
+                                                    <Icon1 name={ ( (bookmark!=null) && (bookmark[item.a_id] != undefined) && (bookmark[item.a_id] != null) ) ? 'bookmark' : 'bookmark-outline' } onPress={()=>{
+                                                        // setLoading(true)
+                                                        if(bookmark != null){
+                                                            var s = bookmark;
+
+                                                            try{
+                                                                if(s[item.a_id] == null || s[item.a_id] == null){
+                                                                    s[item.a_id] = item.a_id;
+                                                                }else{
+                                                                    s[item.a_id] = null;
+                                                                }
+                                                            }catch(e){
+                                                                s[item.a_id] = null;
+                                                            }
+                                                            (async()=>{
+                                                                await AsyncStorage.setItem('bookmark_collections', JSON.stringify(s));
+                                                                get_store_value();
+                                                            })()
+                                                        }else{
+                                                            var s = {}
+
+                                                            try{
+                                                                if(s[item.a_id] == null || s[item.a_id] == null){
+                                                                    s[item.a_id] = item.a_id;
+                                                                }else{
+                                                                    s[item.a_id] = null;
+                                                                }
+                                                            }catch(e){
+                                                                s[item.a_id] = null;
+                                                            }
+                                                            (async()=>{
+                                                                await AsyncStorage.setItem('bookmark_collections', JSON.stringify(s));
+                                                                get_store_value();
+                                                            })()
+
+                                                            // setLoading(false)
+                                                        }
+                                                    }} size={18} style={{marginRight: 10}} />
+                                                </View>
+                                            </View>
                                         </View>
                                         <View style={{alignItems: 'center', justifyContent: 'center'}}>
                                             <Image style={{width: 70, height: 70, borderRadius: 100}} source={{uri: `${CONFIG.BASE_URL}../../images/article_image/${item.a_image}`}} PlaceholderContent={<ActivityIndicator/>}/>
                                         </View>
                                     </View>
-                                </TouchableOpacity>}
+                                </TouchableOpacity>
+
+                                <Text style={{width: 0, height: 0, zIndex: -99}}>{banner_counter.current = Math.ceil( Math.random() * all_banners.length ) - 1}</Text>
+
+                                {
+                                    (((index % 4) == 0) && 
+                                    <TouchableOpacity onPress={()=>Linking.openURL(`${all_banners[banner_counter.current].http_link}`)} style={{width: '100%', position: 'relative'}}>
+                                        <View style={{position:'absolute', zIndex: 11, top: '1%', right: '1%', justifyContent: 'center', alignItems: 'center'}}>
+                                            <Text style={{backgroundColor: 'white', marginRight: '2%', padding: '1%', textAlign: 'center', borderRadius: 8, overflow: 'hidden', color: 'rgba(0, 0, 0, 0.4)', elevation: 9}}>ad</Text>
+                                        </View>
+                                        <Image source={{uri: `${CONFIG.BASE_URL}../../images/banners_image/${all_banners[banner_counter.current].b_image}`}} style={{width: '100%', height: 300, resizeMode: 'stretch'}} PlaceholderContent={<ActivityIndicator />} />
+                                    </TouchableOpacity>)
+                                }
+                                </>}
                             keyExtractor={(item, index) => 'key'+index}
                             numColumns={1}
                         />

@@ -7,6 +7,7 @@ import {Input, Button, Image} from 'react-native-elements'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as Styles from '../user/Styles'
 import WebView from 'react-native-webview';
+import moment from "moment"
 import Carousel from 'react-native-snap-carousel';
 
 export default function News_Contents({navigation, route}) {
@@ -80,6 +81,13 @@ export default function News_Contents({navigation, route}) {
                         <ScrollView style={{flex: 1}}>
                             <View style={{flex: 1, alignItems: 'center', paddingTop: 60}}>
                                 <Text style={styles.content_title}>{ item.a_title }</Text>
+                                <View style={{width: '100%', justifyContent: 'flex-end', flexDirection: 'row'}}>
+                                    <Text style={{color: 'rgba(0, 0, 0, 0.6)', marginRight: 20}}>
+                                        {moment().diff(moment(item.a_date), 'days')} days ago 
+                                    </Text>
+                                    <Text />
+                                </View>
+                                <Text />
                                 <Image style={{width: ((deviceWidth * 90) / 100), height: 360, borderRadius: 4, marginBottom: 10}} source={{uri: `${CONFIG.BASE_URL}../../images/article_image/${item.a_image}`}} PlaceholderContent={<ActivityIndicator/>}/>
                                 <Text style={styles.content_desc}>{item.a_desc}</Text>
 

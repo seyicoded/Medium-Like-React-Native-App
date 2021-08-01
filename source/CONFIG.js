@@ -12,8 +12,8 @@ export const ALERT = ALERTSYSTEM;
 
 export const AppContext = React.createContext([]);
 
-export const BASE_URL = "http://172.20.10.3:8000/api/v1/"
-// export const BASE_URL = "http://blesify1.herokuapp.com/public/api/v1/"
+// export const BASE_URL = "http://172.20.10.3:8000/api/v1/"
+export const BASE_URL = "http://blesify1.herokuapp.com/public/api/v1/"
 export const API_KEY = "Blesify__API_KEY001";
 
 export const GOOGLE_API_KEY = "AIzaSyCVS_wUbz4NMFovS0LVoGWrOBtbcpEKJ3U";
